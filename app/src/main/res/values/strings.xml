@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">DailyOptimize</string>
+    <string name="start">START</string>
+    <string name="previous">previous</string>
+</resources>
