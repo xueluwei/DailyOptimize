@@ -1,12 +1,13 @@
 package com.xlwapp.dailyoptimize
 
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
+
 
 class MainActivity : AppCompatActivity() {
     val MARKET_GOOGLE = "com.android.vending"
@@ -19,6 +20,10 @@ class MainActivity : AppCompatActivity() {
         addId()
         text_view.text = i++.toString()
         button.setOnClickListener{
+            if (!isAvilible(MARKET_GOOGLE)) {
+                Toast.makeText(this,"doesn't have google play store",Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
             if(ID.isNullOrEmpty()){
                 Toast.makeText(this,"finish",Toast.LENGTH_SHORT).show()
             }else{
@@ -58,5 +63,22 @@ class MainActivity : AppCompatActivity() {
         ID.add("taller exercise")
 
         ID.add("baby tracker")
+    }
+
+    fun isAvilible(packageName: String?): Boolean {
+        //获取packagemanager
+        val packageManager: PackageManager = this.getPackageManager()
+        //获取所有已安装程序的包信息
+        val packageInfos =
+            packageManager.getInstalledPackages(0)
+        //用于存储所有已安装程序的包名
+        val packageNames: MutableList<String> = ArrayList()
+        //从pinfo中将包名字逐一取出，压入pName list中
+        for (i in packageInfos.indices) {
+            val packName = packageInfos[i].packageName
+            packageNames.add(packName)
+        }
+        //判断packageNames中是否有目标程序的包名，有TRUE，没有FALSE
+        return packageNames.contains(packageName)
     }
 }
