@@ -36,7 +36,9 @@ public class MyClass {
     public final static String finalFile = "E:\\audio_data_android";
 
     public static void main(String[] args) {
-        TTS2();
+        Scanner scanner = new Scanner(System.in);
+        System.out.println(scanner.nextLine().replaceAll(":", ""));
+//        TTS2();
 //        youtubeJsonUtil();
     }
 
