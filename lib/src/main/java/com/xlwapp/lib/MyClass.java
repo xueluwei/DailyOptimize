@@ -11,12 +11,10 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
-import java.lang.reflect.Field;
-import java.util.ArrayList;
+import java.util.Map;
 import java.util.Scanner;
 
 
@@ -36,10 +34,112 @@ public class MyClass {
     public final static String finalFile = "E:\\audio_data_android";
 
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println(scanner.nextLine().replaceAll(":", ""));
+        addNewFirebaseURL();
 //        TTS2();
 //        youtubeJsonUtil();
+    }
+
+    private static void addNewFirebaseURL() {
+        try {
+            File newfile = new File("E:\\newjson.txt");
+            FileInputStream newinputStream = null;
+            newinputStream = new FileInputStream(newfile);
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(newinputStream));
+            StringBuilder newsb = new StringBuilder();
+            String str = null;
+            while((str = bufferedReader.readLine()) != null) {
+                newsb.append(str).append("\n");
+            }
+            bufferedReader.close();
+            newinputStream.close();
+
+            StringBuilder builder = new StringBuilder();
+            for (String string :newsb.toString().split("\n")) {
+                String[] strings = string.split("\t");
+                if(!strings[1].equals("")){
+                    builder.append("\"" + strings[0] + "\": \"" + strings[2] + "\",\n");
+                    builder.append("\"" + strings[1] + "\": \"" + strings[2] + "\",\n");
+                }else {
+                    builder.append("\"" + strings[0] + "\": \"" + strings[2] + "\",\n");
+                }
+            }
+
+            File file = new File("E:\\30day.json");
+            FileInputStream inputStream = null;
+            inputStream = new FileInputStream(file);
+            InputStreamReader reader = new InputStreamReader(inputStream, "UTF-8");
+            StringBuffer sb = new StringBuffer();
+            while (reader.ready()){
+                sb.append((char) reader.read());
+            }
+            reader.close();
+            inputStream.close();
+
+            String ss1 = builder.toString();
+            String ss2 = sb.toString();
+            StringBuilder resultString = new StringBuilder();
+
+            for (String s2: ss2.split("\n")) {
+                boolean flag = true;
+                for (String s1: ss1.split("\n")) {
+                    if(!s2.equals("{") && !s2.equals("}")){
+                        int int1 = Integer.parseInt(s1.split(":")[0].replaceAll("\"", ""));
+                        int int2 = Integer.parseInt(s2.split(":")[0].replaceAll("  \"", "").replace("\"", ""));
+                        if(int1 == int2) {
+                            if(s1.split(":")[1].equals(s2.split(":")[1].replace("  ",""))){
+                                System.out.println(s1.split(":")[0] + " same");
+                            }else {
+                                System.out.println(s1.split(":")[1] + "\n" + s2.split(":")[1]);
+                            }
+
+                            resultString.append("  ").append(s1).append("\n");
+                            flag = false;
+                        }
+                    }
+                }
+                if (flag && !s2.equals("}")) {
+                    resultString.append(s2).append("\n");
+                }
+            }
+
+            for (String s1: ss1.split("\n")) {
+                boolean flag = true;
+                for (String s2: ss2.split("\n")) {
+                    if(!s2.equals("{") && !s2.equals("}")){
+                        int int1 = Integer.parseInt(s1.split(":")[0].replaceAll("\"", ""));
+                        int int2 = Integer.parseInt(s2.split(":")[0].replaceAll("  \"", "").replace("\"", ""));
+                        if(int1 == int2) {
+                            flag = false;
+                        }
+                    }
+                }
+                if (flag) {
+                    System.out.println(Integer.parseInt(s1.split(":")[0].replaceAll("\"", "")));
+                    resultString.append("  ").append(s1).append("\n");
+                }
+            }
+            resultString.append("}");
+
+            File resultFile = new File("E:\\30dayresult.json");
+            if (!resultFile.exists()){
+                if(resultFile.createNewFile()){
+                    FileOutputStream outputStream = new FileOutputStream(resultFile);
+                    OutputStreamWriter writer = new OutputStreamWriter(outputStream, "UTF-8");
+                    writer.write(resultString.toString());
+                    writer.close();
+                    outputStream.close();
+                }else {
+                    System.out.println("创建文件失败");
+                }
+            }
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 
