@@ -21,8 +21,8 @@ import java.util.Scanner;
 public class MyClass {
 
     //copyXmlFileToAnotherDir
-    public final static String inputFileDir = "E:\\google_version\\dumbbell3D\\Dumbbell3D\\app\\src\\main\\res";
-    public final static String outputFileDir = "E:\\google_version\\lose3d\\LoseWeight3D\\app\\src\\main\\res";
+    public final static String inputFileDir = "E:\\google_version\\armNew\\LoseWeight3D\\app\\src\\main\\res";
+    public final static String outputFileDir = "E:\\google_version\\armNew\\LoseWeight3D\\WorkoutFramework\\src\\main\\res";
 
     //unzipDownloadedFloder
     public final static String unzipFileDir = "E:\\ActionVoicemale-20200821022738";
@@ -34,7 +34,7 @@ public class MyClass {
     public final static String finalFile = "E:\\audio_data_android";
 
     public static void main(String[] args) {
-        addNewFirebaseURL();
+//        addNewFirebaseURL();
 //        TTS2();
 //        youtubeJsonUtil();
     }
@@ -184,7 +184,7 @@ public class MyClass {
     }
 
     private static void TTS2() {
-        copySpecifyXmlFileStringToAnotherDir();
+//        copySpecifyXmlFileStringToAnotherDir();
 //        unzipDownloadedFloder();
 //        deleteAndRenameUnzipFloder();
 //        copySameFileToAnotherDirAndZip();
@@ -273,12 +273,7 @@ public class MyClass {
                                     st.append(str).append("\n");
                                 }
                                 for (String ns : sb.toString().split("\n")) {
-                                    if ((ns.contains("btn_allow") ||
-                                            ns.contains("permission_explained_title") ||
-                                            ns.contains("permission_goto_set_1") ||
-                                            ns.contains("permission_goto_set_2") ||
-                                            ns.contains("permission_goto_set_2_api_level_30") ||
-                                            ns.contains("permission_goto_set_3"))){
+                                    if ((ns.contains("<string name=\"stretch\">"))){
                                         System.out.println(file2.getAbsolutePath() + ":\n" + ns);
                                         st.append(ns.replace("</resources>", "")).append("\n");
                                     }

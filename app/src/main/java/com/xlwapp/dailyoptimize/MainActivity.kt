@@ -62,7 +62,27 @@ class MainActivity : AppCompatActivity() {
         ID.add("grow taller")
         ID.add("taller exercise")
 
-        ID.add("baby tracker")
+        ID.add("running app")
+        ID.add("run app")
+        ID.add("running tracker")
+        ID.add("mile tracker")
+
+        ID.add("video downloader")
+        ID.add("videoder")
+        ID.add("downloader")
+
+        ID.add("photo gallery")
+        ID.add("photos app")
+        ID.add("gallery photos")
+
+        ID.add("math games")
+        ID.add("free maths game")
+        ID.add("addition games")
+
+
+        ID.add("pdf scanner")
+        ID.add("docscan")
+        ID.add("pdf scanner app")
     }
 
     fun isAvilible(packageName: String?): Boolean {

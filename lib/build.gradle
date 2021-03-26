@@ -3,4 +3,5 @@ apply plugin: 'java-library'
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     api files('libs/')
+    implementation 'androidx.annotation:annotation:1.1.0'
 }
